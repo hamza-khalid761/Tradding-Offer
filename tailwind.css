@@ -89,3 +89,12 @@
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
+
+@layer utilities {
+  @media (min-width: 320px) and (max-width: 425px) {
+    .custom-position {
+      left: 73% !important;
+      transform: translateX(-30%) !important;
+    }
+  }
+}
