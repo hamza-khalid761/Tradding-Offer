@@ -1,11 +1,4 @@
-@tailwind components;
-@tailwind utilities;
-
-@layer components {
-  .all-\[unset\] {
-    all: unset;
-  }
-}
+@import url("https://fonts.googleapis.com/css?family=Inter:500,400,300");
 
 @tailwind base;
 @tailwind components;
@@ -87,6 +80,12 @@
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer components {
+  .all-\[unset\] {
+    all: unset;
   }
 }
 

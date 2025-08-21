@@ -8,8 +8,39 @@ import {
 import { Button } from "../../components/ui/button";
 import { Card, CardContent } from "../../components/ui/card";
 import Player from "@vimeo/player";
+import Cookies from "js-cookie";
 
 export const LandingPage = (): JSX.Element => {
+  useEffect(() => {
+    // Extract parameters from URL
+    const queryParams = new URLSearchParams(window.location.search);
+    const paramsToTrack = ["src", "clk", "camp", "wt_coupon", "ref", "param"];
+
+    // Store in cookies if they exist
+    paramsToTrack.forEach((param) => {
+      const value = queryParams.get(param);
+      if (value) {
+        Cookies.set(param, value, { expires: 7 }); // 7 days expiry
+      }
+    });
+  }, []);
+
+  const redirectWithParams = (url: string) => {
+    const paramsToAppend = ["src", "clk", "camp", "wt_coupon", "ref", "param"];
+    const urlParams = new URLSearchParams();
+
+    // Add stored params to URL
+    paramsToAppend.forEach((param) => {
+      const value = Cookies.get(param);
+      if (value) {
+        urlParams.append(param, value);
+      }
+    });
+
+    const separator = url.includes("?") ? "&" : "?";
+    window.location.href = `${url}${separator}${urlParams.toString()}`;
+  };
+
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
   const playerRef = useRef<any>(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -150,41 +181,7 @@ export const LandingPage = (): JSX.Element => {
             The Side Hustle Helping Traders Earn $1,500-$9,500 per month
           </h1>
 
-          {/* <div className="relative z-10 w-full max-w-[95%] sm:max-w-[90%] md:max-w-[80%] lg:max-w-[1000px] mx-auto mt-3 lg:mt-12">
-            <div className="relative aspect-video overflow-hidden rounded-2xl border border-white/20 backdrop-blur-md bg-white/10">
-              <iframe
-                ref={iframeRef}
-                src="https://player.vimeo.com/video/1090860591?h=5e4b7efc9f&autoplay=0&muted=0&loop=1&controls=1&title=0&byline=0&portrait=0&background=1"
-                className="absolute top-0  left-0 w-full h-full"
-                frameBorder="0"
-                allow="autoplay; fullscreen; picture-in-picture"
-                allowFullScreen
-              />
-
-              <button
-                onClick={handleTogglePlayPause}
-                className="absolute bottom-4 lg:bottom-6 left-4  z-30 bg-white/90 rounded-full p-2 shadow-xl hover:scale-110 transition"
-              >
-                {isPlaying ? (
-                  <svg
-                    className="w-4 h-4 text-gray-900"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
-                  </svg>
-                ) : (
-                  <svg
-                    className="w-4 h-4 text-gray-900"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
-                )}
-              </button>
-            </div>
-          </div> */}
+        
 
           <div className="relative z-10 w-full max-w-[95%] sm:max-w-[90%] md:max-w-[80%] lg:max-w-[1000px] mx-auto mt-3 lg:mt-12">
             <div
@@ -212,7 +209,12 @@ export const LandingPage = (): JSX.Element => {
       transition-all
     "
             >
-              <span className="text-[#042720] text-base sm:text-lg md:text-xl lg:text-2xl font-bold font-inter">
+              <span
+                onClick={() =>
+                  redirectWithParams("https://tradings-offers.co.uk/")
+                }
+                className="text-[#042720] text-base sm:text-lg md:text-xl lg:text-2xl font-bold font-inter"
+              >
                 GET 25% OFF NOW
               </span>
             </Button>
@@ -294,8 +296,9 @@ export const LandingPage = (): JSX.Element => {
               alt="Testimonial 1"
               className="w-full rounded-xl shadow-lg cursor-pointer"
               onClick={() =>
-                (window.location.href =
-                  "https://www.trustpilot.com/review/getleveraged.com")
+                redirectWithParams(
+                  "https://www.trustpilot.com/review/getleveraged.com"
+                )
               }
             />
             <img
@@ -303,8 +306,9 @@ export const LandingPage = (): JSX.Element => {
               alt="Testimonial 2"
               className="w-full rounded-xl shadow-lg cursor-pointer"
               onClick={() =>
-                (window.location.href =
-                  "https://www.trustpilot.com/review/getleveraged.com")
+                redirectWithParams(
+                  "https://www.trustpilot.com/review/getleveraged.com"
+                )
               }
             />
             <img
@@ -312,8 +316,9 @@ export const LandingPage = (): JSX.Element => {
               alt="Testimonial 3"
               className="w-full rounded-xl shadow-lg cursor-pointer"
               onClick={() =>
-                (window.location.href =
-                  "https://www.trustpilot.com/review/getleveraged.com")
+                redirectWithParams(
+                  "https://www.trustpilot.com/review/getleveraged.com"
+                )
               }
             />
             <img
@@ -321,8 +326,9 @@ export const LandingPage = (): JSX.Element => {
               alt="Testimonial 4"
               className="w-full rounded-xl shadow-lg cursor-pointer"
               onClick={() =>
-                (window.location.href =
-                  "https://www.trustpilot.com/review/getleveraged.com")
+                redirectWithParams(
+                  "https://www.trustpilot.com/review/getleveraged.com"
+                )
               }
             />
             <img
@@ -330,8 +336,9 @@ export const LandingPage = (): JSX.Element => {
               alt="Testimonial 5"
               className="w-full rounded-xl shadow-lg cursor-pointer"
               onClick={() =>
-                (window.location.href =
-                  "https://www.trustpilot.com/review/getleveraged.com")
+                redirectWithParams(
+                  "https://www.trustpilot.com/review/getleveraged.com"
+                )
               }
             />
             <img
@@ -339,8 +346,9 @@ export const LandingPage = (): JSX.Element => {
               alt="Testimonial 6"
               className="w-full rounded-xl shadow-lg cursor-pointer"
               onClick={() =>
-                (window.location.href =
-                  "https://www.trustpilot.com/review/getleveraged.com")
+                redirectWithParams(
+                  "https://www.trustpilot.com/review/getleveraged.com"
+                )
               }
             />
           </div>
@@ -370,8 +378,9 @@ export const LandingPage = (): JSX.Element => {
                       className="w-[80px] h-[80px] md:w-[100px] md:h-[100px] lg:w-[126px] lg:h-[126px] cursor-pointer hover:bg-[#053a2d] bg-cover"
                       alt="Account icon"
                       src={account.iconSrc}
+                      // you can add a custom link here 
                       onClick={() =>
-                        (window.location.href = "https://www.wikipedia.org/")
+                        redirectWithParams("https://tradings-offers.co.uk/")
                       }
                     />
                     <div className="flex flex-col items-center gap-3 lg:gap-5 w-full">
@@ -414,8 +423,9 @@ export const LandingPage = (): JSX.Element => {
                       className="w-[80px] h-[80px] md:w-[100px] md:h-[100px] lg:w-[126px] lg:h-[126px] cursor-pointer hover:bg-[#053a2d] bg-cover"
                       alt="Account icon"
                       src={account.iconSrc}
+                      // the second custom link you can add url here below this
                       onClick={() =>
-                        (window.location.href = "https://www.wikipedia.org/")
+                        redirectWithParams("https://tradings-offers.co.uk/")
                       }
                     />
                     <div className="flex flex-col items-center gap-3 lg:gap-5 w-full">
@@ -426,11 +436,7 @@ export const LandingPage = (): JSX.Element => {
                         <p className="font-inter font-medium text-[#d5d5d5] text-opacity-70 text-[20px] md:text-[24px] text-center tracking-[-0.24px] leading-6">
                           {account.price}
                         </p>
-                        {/* <img
-                          className="absolute top-1 custom-position left-[71%] sm:left-[72%] md:left-[79%] lg:left-[79%] xl:left-[67%] -translate-x-1/3 w-[30px] md:w-[47px] h-[20px] md:h-[25px]"
-                          alt="Line"
-                          src={account.lineSrc}
-                        /> */}
+                       
                         <img
                           className="absolute top-1 left-[72%] lg:left-[66%] translate-x-[-30%] w-[30px] md:w-[47px] h-[20px] md:h-[25px] custom-position"
                           alt="Line"
@@ -463,6 +469,7 @@ export const LandingPage = (): JSX.Element => {
             Get an exclusive 25% discount with code “TOFFERS”!
           </p>
           <button
+            onClick={() => redirectWithParams("https://tradings-offers.co.uk/")}
             className="w-[250px] h-[70px] lg:w-[180px] lg:h-[60px] rounded-lg text-white font-normal text-xl tracking-wide transition border-none font-inter"
             style={{
               border: "0.9px solid rgba(255,255,255,0.08)",
@@ -613,6 +620,7 @@ export const LandingPage = (): JSX.Element => {
                       <AccordionTrigger className="flex items-center justify-between w-full py-6 font-sequel font-medium text-white text-2xl tracking-[0.20px] leading-[1.3] hover:no-underline">
                         {question}
                       </AccordionTrigger>
+                      {/* you can add the text of faqs here this is the comment message  */}
                       <AccordionContent className="pb-6 font-inter font-normal text-white text-opacity-70 text-lg">
                         More information will be provided here.
                       </AccordionContent>
@@ -675,18 +683,19 @@ export const LandingPage = (): JSX.Element => {
                         <span className="opacity-70 font-inter font-normal text-white text-xs mt-1">
                           {item.label}
                         </span>
-                        {/* {index < 2 && (
-                          <span className="font-sequel font-medium text-[#9af5bd] text-3xl mx-2">
-                            :
-                          </span>
-                        )} */}
+                        
                       </div>
                     ))}
                   </div>
 
                   {/* Button */}
                   <div className="flex justify-start ">
-                    <Button className="w-full max-w-[280px] py-6 bg-[#042720] rounded-full border border-[#9AF5BD] ">
+                    <Button
+                      onClick={() =>
+                        redirectWithParams("https://tradings-offers.co.uk/")
+                      }
+                      className="w-full max-w-[280px] py-3 bg-[#042720] rounded-full border border-[#9AF5BD] "
+                    >
                       <span className="font-inter font-bold text-[#9AF5BD] text-lg">
                         Get 25% Off Now!
                       </span>
@@ -742,17 +751,18 @@ export const LandingPage = (): JSX.Element => {
                       <span className="opacity-70 font-inter font-normal text-white text-sm mt-1">
                         {item.label}
                       </span>
-                      {/* {index < 2 && (
-                        <span className="font-sequel font-medium text-[#9af5bd] text-4xl mx-3">
-                          :
-                        </span>
-                      )} */}
+                      
                     </div>
                   ))}
                 </div>
 
                 {/* Button */}
-                <Button className="px-8 py-7 bg-[#042720] rounded-full border border-[#9af5bd] hover:bg-[#053a2d] min-w-[200px]">
+                <Button
+                  onClick={() =>
+                    redirectWithParams("https://tradings-offers.co.uk/")
+                  }
+                  className="px-8 py-7 bg-[#042720] rounded-full border border-[#9af5bd] hover:bg-[#053a2d] min-w-[200px]"
+                >
                   <span className="font-sequel font-semibold text-[#9af5bd] text-xl">
                     Get 25% Off Now!
                   </span>
